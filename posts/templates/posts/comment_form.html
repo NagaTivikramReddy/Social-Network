@@ -1,0 +1,21 @@
+{% extends 'posts/post_base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block post_content %}
+
+<div class="container">
+<form action="" method="POST">
+    {%csrf_token%}
+    {% bootstrap_form form %}
+    <input class="btn btn-info btn-sm" type="submit" name="" id="" value="Comment">
+</form>
+</div>
+
+<center>
+    <h4><a class="btn btn-primary" href="{% url 'home'%}">back</a></h4>
+</center>
+
+
+
+{% endblock post_content %}

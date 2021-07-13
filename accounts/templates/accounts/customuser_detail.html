@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+<center>
+    <div style="background-color: rgb(238, 217, 235);" class="col-md-8">  
+        <div style="width: 50%;" class="card">
+            <div class="card-img-top">
+                
+                {% if clicked_user %}
+                    <img  src="{{clicked_user.image.url}}" alt="" height="300" width="400">
+                    <div class="card-body">
+                    <h3 class="card-title">
+                        <b>{{clicked_user.username}}</b>
+                    </h3>
+                    <div class="mv-lg">
+                        <h4><b>{{clicked_user.email}} </b></h4>
+                        <p><b><i>Joined Social media on {{clicked_user.date_joined}} </i></b></p>
+                    </div>
+                </div>
+                {% else %}
+                        <img  src="{{user.image.url}}" alt="" height="250" width="450">
+                        <h3 class="m0 text-bold">
+                            {{user.username}}
+                        </h3>
+                        <div class="mv-lg">
+                            <p>{{user.email}} </p>
+                        </div>
+                {%endif%}
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-md-4">
+        <h2>
+            <i>
+                Groups
+            </i>
+        </h2>
+        
+        <div class="">
+            {% for group in user_groups %}
+            <a href="{% url 'groups:single' slug=group.group.slug %}">
+                <h3 >
+                    {{group.group}}
+                </h3>
+            </a>
+            {%empty%}
+            <p>Not a member of any group</p>
+            {% endfor %}
+        </div>
+    </div>
+</center>
+</div>
+
+
+
+<center>
+
+    <h1 style="margin-bottom: 30px;">
+        <i>
+            Posts
+        </i>
+    </h1>
+    <class class="col-md-12">
+    
+            
+            {% for post in user_posts  %}  
+                
+                    
+                        {% include 'posts/_post.html' %}
+                        {%empty%}
+                        <p>
+                            No Posts
+                        </p>
+                    </class>
+                    <br>
+                
+            {% endfor %}  
+    </div>
+</center>
+    
+    <br>
+    
+
+{% endblock content %}
+
+<!-- The below code will not get executed -->
+

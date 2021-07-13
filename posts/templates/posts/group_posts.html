@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+    <div class="col-mod-4">
+        
+        {% for post in groupposts  %}
+        {% include 'posts/_post.html' %}
+        {%empty%}
+        <p>No Posts</p>
+    {% endfor %}
+            
+    </div>
+
+
+{%endblock content%}

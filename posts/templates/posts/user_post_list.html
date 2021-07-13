@@ -1,0 +1,26 @@
+{% extends 'posts/post_base.html' %}
+
+
+
+{% block post_content %}
+<center>
+<div style="margin-bottom: 20px;">
+    <h1>Posts Posted by @{{post_user.username}}</h1>
+</div>
+</center>
+
+<div>
+    {% for post in post_list  %}
+        {% include 'posts/_post.html' %}
+        {%empty%}
+        <p>No Posts</p>
+    {% endfor %}
+</div>
+
+{% endblock post_content %}
+
+
+
+    
+    
+    

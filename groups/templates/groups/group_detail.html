@@ -1,0 +1,119 @@
+{% extends 'groups/group_base.html' %}
+
+
+{% block pregroup %}
+ 
+    <div class="col-md-8">
+        <div class="panel panel-default" >
+            <div class="panel-body text-center">
+                
+                <h3 class="m0 text-bold">{{group.name}}</h3>
+                <div class="mv-lg">
+                    <p>{{group.description|safe}} </p>
+                </div>
+                <p><i> {{group.members.count}} member{{group.members.count|pluralize}}</i></p>
+                <div class="text-center">
+                    {% if user in group.members.all %}
+    
+                    <a class="btn btn-md btn-fill btn-primary" href="{% url 'groups:leave' slug=group.slug%}"><span class="glyphicon glyphicon-remove-circle"></span> Leave Group</a>
+                    
+                    {% else %}
+                    
+                    <a class="btn btn-md btn-fill btn-primary" href="{% url 'groups:join' slug=group.slug%}"><span class="glyphicon glyphicon-ok-circle"></span> Join Group</a>
+                    
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <center>
+        <div>
+        Go to <a href="{% url 'groups:groupposts' pk=group.pk %}">  <b>Group Posts</b>  </a>
+    </div>
+</center>
+        
+    </div>
+
+    <div class="col-md-4 pull-right" >
+        <div class="panel panel-default hidden-xs hidden-sm">
+            <div class="panel-heading">
+                <div class="panel-title text-center">Group Members</div>
+            </div>
+            <div class="panel-body">
+                
+                {% for member in group.members.all  %}
+                    
+                <div class="media">
+                    
+                    <div class="media-body pt-sm">
+                        <div class="text-bold">
+                            
+                            {% if member.username == request.user.username %}
+                                <h4><span class="glyphicon glyphicon-user"></span><a href="{% url 'accounts:profile' pk=member %}"> You</a></h4>
+                            {% else %}
+                            <h4><span class="glyphicon glyphicon-user"></span><a href="{% url 'accounts:profile' pk=member %}"> {{member}}</a></h4>
+                            {% endif %}
+                            <div class="text-sm text-muted">
+                                <i>last seen {{member.last_login | timesince}}</i> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div> 
+            </div>
+
+
+            <div>
+                
+                {% for a in groupmember_list  %}
+                    <p>{{a}}</p>
+                    
+                {% endfor %}
+                    
+            </div>
+
+
+
+
+
+
+
+
+    <!-- <div class="card" style="width: 500px;">
+        <h1 class="card-title">{{group.name}}</h1>
+    {% if user in group.members.all %}
+ 
+    <a class="btn btn-lg btn-fill btn-warning" href="{% url 'groups:leave' slug=group.slug%}"><span class="glyphicon glyphicon-remove-circle"></span>Leave</a>
+    
+    {% else %}
+    
+    <a class="btn btn-lg btn-fill btn-warning" href="{% url 'groups:join' slug=group.slug%}"><span class="glyphicon glyphicon-ok-circle"></span>Join</a>
+    
+    {% endif %}
+
+<h2>Member Count : </h2>
+</div>
+</div> -->
+{% endblock pregroup %}
+
+{% block group_content %}
+    <!-- <div class="col-md-8"> -->
+        
+        {% if group.posts.count == 0 %}
+            <h1>No Posts in the Group</h1>
+
+        {% else %}
+        
+            {% for post in group.posts.all  %}
+                {% include 'posts/_post.html' %}
+            {% endfor %}
+            
+        {% endif %}
+            
+    <!-- </div> -->
+
+</center>
+{% endblock group_content %}
+    
+
+    

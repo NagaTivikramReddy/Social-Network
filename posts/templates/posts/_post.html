@@ -1,0 +1,75 @@
+
+<head>
+
+</head>
+<center>
+
+    <div class="flex-container">
+        
+    
+    <div class="card">
+        <div class="card-header">
+            <!-- <span class="aa"> -->
+                <a style="color:brown;font-style: italic; font-size: medium;" href="{% url 'accounts:profile' pk=post.user.pk%}"><b>@{{post.user.username}}</b></h6></a>
+            <!-- </span> -->
+            <time class="time">
+                <a style="color: brown; font-size: medium;" href="{% url 'posts:single' username=post.user.username pk=post.pk %}"><b>{{post.created_at}}</b></a>
+            </time>
+        </div>
+
+        <div class="card-body">
+            <h2 style="color:black;font-family:cursive; margin-bottom: 30px;">{{post.message|safe}}</h2>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="" height="300" width="500">
+            {% endif %}
+        </div>
+
+        <div class="card-footer">
+            <p>
+                <a style="color:rgba(0, 0, 0, 0.849); font-size:medium;font-style: italic; font-weight: lighter;" href="{% url 'groups:single' slug=post.group.slug%}"><b> Posted in {{post.group.name}}</b>
+                </a>    
+                {% if user.is_authenticated and post.user == user and not hide_delete%}
+                    <a class="btn btn-simple" title="delete" href="{% url 'posts:delete' pk=post.pk%}">
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                        <span class="text-danger icon-label"><b> Delete</b></span>
+                    </a>
+                {% endif %}
+            </p>
+        </div>
+    <hr style="width: 75%;background-color: whitesmoke; color: red;height: 1px;">
+
+    <p >
+    {% if user.is_authenticated %}
+    
+
+        {% if user not in post.liked.all %}
+            <a class="btn btn-success btn-sm" href="{% url 'posts:postlike' pk=post.pk %}">Like</a>
+        {%else%}
+            <a class="btn btn-danger btn-sm" href="{% url 'posts:postlike' pk=post.pk %}">UnLike</a>
+        {%endif%}
+        <strong style="font-size: small;font-family: Arial, Helvetica, sans-serif;">
+            {{post.liked.all.count}} like{{post.liked.all.count|pluralize}}
+        </strong>
+
+        <a class="btn btn-primary btn-sm" href="{% url 'posts:postcomment' pk=post.pk%}">Comment </a>
+        <strong style="font-size: small;font-family: Arial, Helvetica, sans-serif;">
+            {{post.commentpost.all.count}} comment{{post.commentpost.all.count|pluralize}}
+        </strong>
+        
+        <a style="color:darkblue;" href="{% url 'posts:commentdetails' pk=post.pk%}"> <u>View comments</u></a>
+        
+
+        
+    {%endif%}
+    </p>
+
+
+</div>
+
+</div>
+
+</center>
+
+
+
+

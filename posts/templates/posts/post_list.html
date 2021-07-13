@@ -1,0 +1,16 @@
+{% extends 'posts/post_base.html' %}
+
+
+{% block post_content %}
+    <div class="col-mod-4">
+        
+        {% for post in post_list  %}
+        {% include 'posts/_post.html' %}
+        {%empty%}
+        <p>No Posts</p>
+    {% endfor %}
+            
+    </div>
+{% endblock post_content %}
+
+    

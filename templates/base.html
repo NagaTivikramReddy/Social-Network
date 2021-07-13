@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media</title>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous" 
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- {% comment %} Fonts {% endcomment %} -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <link type="text/css" rel="stylesheet" href="{% static 'socialnetwork/css/master.css'%}"/>
+  
+</head>
+<body>
+      <nav class="navbar navbar-expand-lg navbar-light mynav"  role="navigation" id='navbar'>
+        
+        <div class="container navbarcontainer">
+            <a style="font-weight: bold;" class="navbar-brand mynav" href="{% url 'home'%}"><span class="glyphicon glyphicon-home"></span> Social Media
+            </a>
+            <a style="font-weight:normal;" class="navbar-brand" href="{% url 'admin:index' %}">Administration</a>
+            <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav ml-auto navbar-right" >
+          
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'posts:create'%}">Post</a></li>
+                    <li class="nav-item"><a href="{% url 'groups:all'%}">Groups</a></li>
+                    <li class="nav-item"><a href="{% url 'groups:create'%}">Create Group</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:profile' pk=user.username %}">{{user.username}}</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:logout'%}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a href="{% url 'groups:all'%}">Groups</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:login'%}">Login</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:signup'%}">SignUp</a></li>
+                    
+                {% endif %}
+                
+            </ul>
+          </div>
+        
+        </div>
+    </nav>
+   <div class="container">
+  {% block content %}
+  
+      
+  {% endblock content %}
+  </div>
+</div>
+
+
+</body>
+
+
+</html>

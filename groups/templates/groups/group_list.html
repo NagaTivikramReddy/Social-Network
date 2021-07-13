@@ -1,0 +1,50 @@
+{% extends 'groups/group_base.html' %}
+
+
+{% block pregroup %}
+<center>
+    
+        <div class="container">
+            
+            {% if user.is_authenticated %}
+            <h2>Hi!
+                <a href="{% url 'accounts:profile' pk=user.username%}">@{{user.username}}</a>
+                Welcome back to Groups page!
+            </h2>
+                
+            {% endif %}
+        </div>
+        
+        <div class="container">
+
+            {% if user.is_authenticated %}
+            <a class="btn btn-md btn-fill btn-primary" href="{% url 'groups:create' %}"><span class="glyphicon glyphicon-plus"></span> Create New Group</a>
+            
+        {% endif %}
+    </div>  
+   
+<br>
+</center>
+{% endblock pregroup %}
+
+
+{% block group_content %}
+<center>
+    {% for group in group_list  %}
+
+        <div style="width: 60%;" class="list-group">                
+                <a class="list-group-item" href="{% url 'groups:single' slug=group.slug %}"><h3 class="title list-group-item-heading">{{group.name}}</h3></a>
+            
+                
+            </div>
+        
+    
+    {% empty%}
+    <p>No groups</p>
+
+<br>
+    {% endfor %}
+
+</center>
+{% endblock group_content %}
+
