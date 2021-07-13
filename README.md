@@ -1,7 +1,7 @@
 # Social-Network
 A simple Social Network web application
 
-Its a user-login based we application similar to facebook. 
+Its a user-login based web application. It has the following features
 
 Features : 
 
