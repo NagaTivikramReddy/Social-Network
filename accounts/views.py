@@ -14,8 +14,6 @@ from groups.models import GroupMember
 
 User = get_user_model()
 
-# Create your views here.
-
 
 class SignUp(CreateView):
     form_class = forms.UserCreateForm

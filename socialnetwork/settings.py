@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'groups',
     'posts',
+    'api',
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [

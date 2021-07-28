@@ -4,10 +4,7 @@ from django.views.generic import TemplateView, ListView
 # Create your views here.
 
 from posts.models import Post
-
-
-class TestPage(TemplateView):
-    template_name = 'test.html'
+from groups.models import Group
 
 
 class ThanksPage(TemplateView):

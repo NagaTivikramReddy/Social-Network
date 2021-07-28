@@ -27,5 +27,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('posts/', include('posts.urls', namespace='posts')),
     path('groups/', include('groups.urls', namespace='groups')),
-    path('thanks/', views.ThanksPage.as_view(), name='thanks')
+    path('thanks/', views.ThanksPage.as_view(), name='thanks'),
+    path('api/', include('api.urls', namespace='api'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

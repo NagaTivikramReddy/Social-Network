@@ -23,6 +23,11 @@ class Group(models.Model):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    def create_default_group(self):
+        self.name = "Public"
+        self.description = "Public Group"
+        self.save()
+
     def get_absolute_url(self):
         return reverse('groups:single', kwargs={'slug': self.slug})
 

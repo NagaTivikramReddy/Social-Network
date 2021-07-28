@@ -13,29 +13,21 @@ class Post(models.Model):
     user = models.ForeignKey(User, related_name='userposts',
                              on_delete=models.CASCADE)
     message = models.TextField()
-    #message_html = models.TextField(editable=False)
     image = models.ImageField(upload_to='posts/images', blank=True, default='')
     created_at = models.DateTimeField(auto_now=True)
     group = models.ForeignKey(
         Group, related_name='groupposts', on_delete=models.CASCADE)
     liked = models.ManyToManyField(User, default=None, blank=True)
-    # commented = models.ManyToManyField(
-    #     User, related_name='postcommented', default=None, blank=True)
 
     def __str__(self):
         return self.message
 
     def save(self, *args, **kwargs):
-        #message_html = misaka.html(self.message)
         super().save(*args, *kwargs)
 
     @property
     def NumeberOfLikes(self):
         return self.objects.all().count()
-
-    # @property
-    # def NumberofComments(self):
-    #     return self.objects.all().count()
 
     class Meta:
         #ordering = ['-created_at']
