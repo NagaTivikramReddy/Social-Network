@@ -34,21 +34,13 @@ class UserPosts(LoginRequiredMixin, ListView):
     template_name = 'posts/user_post_list.html'
 
     def get_queryset(self):
-
-        try:
-            self.post_user = User.objects.prefetch_related('userposts').get(
-                username__iexact=self.kwargs.get('username'))
-
-        except User.DoesNotExist:
-            Http404
-
-        else:
-            return self.post_user.userposts.all()
+        self.temp = Post.objects.select_related(
+            'user').filter(user__username=self.kwargs.get('username'))
+        return self.temp
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['post_user'] = self.post_user
-
+        context['post_user'] = self.kwargs.get('username')
         return context
 
 
