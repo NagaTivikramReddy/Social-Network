@@ -9,6 +9,19 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+class PostQuerySet(models.QuerySet):
+    def sorted(self):
+        return self.order_by('-created_at')
+
+
+class PostManager(models.Manager):
+    def sorted(self):
+        return self.get_queryset().sorted()  # This will call the below get_queryset()
+
+    def get_queryset(self):
+        return PostQuerySet(model=self.model, using=self._db, hints=self._hints)
+
+
 class Post(models.Model):
     user = models.ForeignKey(User, related_name='userposts',
                              on_delete=models.CASCADE)
@@ -18,6 +31,9 @@ class Post(models.Model):
     group = models.ForeignKey(
         Group, related_name='groupposts', on_delete=models.CASCADE)
     liked = models.ManyToManyField(User, default=None, blank=True)
+    temp = models.CharField(max_length=10, null=True, blank=True)
+
+    objects = PostManager()
 
     def __str__(self):
         return self.message

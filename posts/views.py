@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from groups.models import Group, GroupMember
 from django.db import models
 from .forms import *
@@ -9,10 +10,16 @@ from django.contrib import messages
 
 from django.http import Http404
 from django.urls import reverse_lazy
-
 from braces.views import SelectRelatedMixin
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+
+from django.core.cache import caches
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
 User = get_user_model()
 
 
@@ -34,6 +41,7 @@ class UserPosts(LoginRequiredMixin, ListView):
     template_name = 'posts/user_post_list.html'
 
     def get_queryset(self):
+        print(self.request)
         self.temp = Post.objects.select_related(
             'user').filter(user__username=self.kwargs.get('username'))
         return self.temp
@@ -49,6 +57,7 @@ class UserPostDetails(LoginRequiredMixin, SelectRelatedMixin, DetailView):
     select_related = ('user', 'group')
 
     def get_queryset(self):
+        print(self.request)
         queryset = super().get_queryset()
         return queryset.filter(user__username__iexact=self.kwargs.get('username'))
 
@@ -137,4 +146,4 @@ def CommentDetails(request, pk):
 class DeleteComment(LoginRequiredMixin, SelectRelatedMixin, DeleteView):
     model = Comment
     select_related = ('post',)
-    success_url = reverse_lazy('posts:all')
+    success_url = reverse_lazy('home')
